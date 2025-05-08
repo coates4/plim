@@ -135,7 +135,7 @@ def attack(epoch,lr):
         update = autograd(loss,data_p_temp,create_graph=False)
         
         data_t_temp = data_p_temp - lr * update[0]
-
+        data_t_temp = torch.clamp(data_t_temp, 0.0, 1.0)
         with torch.no_grad():
             data_p[i:int(i+epsilon*len(data))] = data_t_temp
             target_p[i:int(i+epsilon*len(data))] = target_p_temp
