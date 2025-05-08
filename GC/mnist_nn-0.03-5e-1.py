@@ -126,7 +126,8 @@ def attack(epoch,lr):
         update = autograd(loss,data_p,create_graph=True)
         
         data_t = data_p - lr * update[0]
-
+        # Clipping
+        data_t = torch.clamp(data_t, 0.0, 1.0)
         #print("data change:{}".format(torch.mean(data_t-data_p)))
         torch.save(data_t, 'poisoned_models/mlp/data_p_{}_{}.pt'.format(epsilon,epsilon_w))
         
